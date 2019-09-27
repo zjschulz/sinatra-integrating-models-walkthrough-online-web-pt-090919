@@ -21,9 +21,24 @@ class TextAnalyzer
   end
 
   def most_used_letter
-    no_spaces = text.gsub(" ", "")
-    letters = no_spaces.split("")
-    histogram = Hash[*letters.group_by{ |v| v }.flat_map{ |k, v| [k, v.size] }]
-    histogram.max_by{ |k, v| v }
+    s1 = text.gsub(/[^a-z]/, '')
+    arr = s1.split('')
+    arr1 = arr.uniq
+    arr2 = {}
+
+    arr1.map do |c|
+      arr2[c] =  arr.count(c)
+    end
+
+    biggest = { arr2.keys.first => arr2.values.first }
+
+    arr2.each do |key, value|
+      if value > biggest.values.first
+        biggest = {}
+        biggest[key] = value
+      end
+    end
+
+    biggest
   end
 end
